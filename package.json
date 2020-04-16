@@ -1,0 +1,29 @@
+{
+  "name": "iwa-ca2",
+  "version": "1.0.0",
+  "description": "Hosting my CA2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardwelbert/IWA-CA2.git"
+  },
+  "author": "Richard Biagi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richardwelbert/IWA-CA2/issues"
+  },
+  "homepage": "https://github.com/richardwelbert/IWA-CA2#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.3",
+    "http": "0.0.1-security",
+    "mongoose": "^5.9.9",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
+}
