@@ -1,0 +1,1 @@
+var Album = require('../models/album');

@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 
 var albumSchema = new mongoose.Schema ({
+    image: {
+        type: String
+    },
     artist: {
         type: String
     },
