@@ -12,7 +12,7 @@ var port = process.env.PORT || 3000;
 const albumCtrl = require('./controllers/album-controller');
 
 //app.use(logger('dev'));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 //importing routes
 app.use(require('./controllers/routes'));

@@ -19,3 +19,12 @@ exports.getAlbums = function(req, res) {
     res.json(album);
   }); 
 };
+
+exports.getAlbum = function(req, res) {
+  Album.findOne({_id: req.params.id}, function (err, album) {
+    if (err) {
+      res.status(400).json(err);
+    } 
+    res.json(album);
+  }); 
+};
