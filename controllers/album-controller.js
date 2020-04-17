@@ -28,3 +28,21 @@ exports.getAlbum = function(req, res) {
     res.json(album);
   }); 
 };
+
+exports.deleteAlbum = function(req, res) {
+  Album.findByIdAndRemove(req.params.id, function (err, album) {
+    if (err) {
+      res.status(400).json(err);
+    } 
+    res.json(album);
+  }); 
+};
+
+exports.updateAlbum = function(req, res) {
+  Album.findOneAndUpdate({_id: req.params.id}, req.body, {new: true},function (err, album) {
+    if (err) {
+      res.status(400).json(err);
+    } 
+    res.json(album);
+  }); 
+};
