@@ -1,9 +1,11 @@
 var express = require('express'),
-router = express.Router(),
-albumCtrl = require('./controllers/album-controller');
+router = express.Router();
+const albumCtrl = require('./album-controller');
 
-module.exports.UPLOAD_PATH = 'uploads';
+router.post('/albums', albumCtrl.createAlbum);
+router.get('/albums', albumCtrl.getAlbums);
+//router.get('/albums/:id', albumCtrl.getAlbum);
+//router.delete('/albums/:id', albumCtrl.deleteAlbum);
+//router.put('/albums/:id', albumCtrl.updateAlbum);
 
-var multer = require('multer'),
-upload = multer({ dest: module.exports.UPLOAD_PATH }),
-
+module.exports = router;
