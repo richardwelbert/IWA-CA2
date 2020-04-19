@@ -1,5 +1,11 @@
 var Album = require('../models/album');
 
+exports.getpage = function(req, res){
+    res.render("./views/index", {
+        viewTitle: "Albums"
+    });
+};
+
 exports.createAlbum = function(req, res) { 
     var newalbum = new Album(req.body);
     newalbum.save(function (err, album) { 
@@ -12,11 +18,11 @@ exports.createAlbum = function(req, res) {
 };
 
 exports.getAlbums = function(req, res) {
-  Album.find({}, function (err, album) {
+  Album.find({}, function (err, albums) {
     if (err) {
       res.status(400).json(err); 
     } 
-    res.json(album);
+    res.json(albums);
   }); 
 };
 
