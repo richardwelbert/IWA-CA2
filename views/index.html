@@ -73,15 +73,15 @@
                     </div>
                 </div>
                 <div class="col-lg-4 text-center order-2">
-                    <form name="newAlbumForm" enctype="application/json" action="/post/json" onsubmit="return validateForm()" method="post">
+                    <form name="newAlbumForm" enctype="application/json" action="/post-newalbum" onsubmit="return validateForm()" method="post">
                         <label for="">Add a new Album</label>
                         <div class="form-group">
-                            <select class="form-control" name="sec_n">
+                            <select class="form-control" name="genre">
                                 <option selected>Choose...</option>
-                                <option value="0">Pop</option>
-                                <option value="1">ReB</option>
-                                <option value="2">Hip Hop</option>
-                                <option value="3">Electronic Dance Music</option>
+                                <option value="POP">Pop</option>
+                                <option value="REB">ReB</option>
+                                <option value="HIPHOP">Hip Hop</option>
+                                <option value="EDM">Electronic Dance Music</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -94,7 +94,7 @@
                             <input class="form-control"  type="number" name="year" placeholder="Year">
                         </div>
                         
-                        <button id="success-btn" type="submit" class="btn btn-outline-secondary">Submit</button>
+                        <button id="success-btn" onclick="window.location.href ='index.html';" type="submit" class="btn btn-outline-secondary">Submit</button>
                     </form>
                     
                     <button id="delete" class="btn btn-outline-danger">Delete</button>
@@ -136,7 +136,6 @@
             success: function(response){
                 myArray = response
                 buildTable(myArray)
-                console.log(myArray)
             }
         })
 

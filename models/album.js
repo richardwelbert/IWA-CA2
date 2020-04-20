@@ -15,7 +15,6 @@ var albumSchema = new mongoose.Schema ({
     },
     genre: {
         type: String,
-        enum: ['POP', 'REB', 'HIPHOP', 'EDM']
     }
 });
 
