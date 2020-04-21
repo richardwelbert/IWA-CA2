@@ -60,10 +60,10 @@
                         <table id="menuTable" class="indent table-hover">
                             <thead>
                                 <tr>
-                                    <th colspan="6">Album Collection</th>
+                                    <th colspan="6" style= "text-align:center">Album Collection</th>
                                 </tr>
                                 <tr>
-                                    <th style="text-align: center; width: 45px;">Select<input type="checkbox" id="checkall"/></th>
+                                    <th>Select</th>
                                     <th>Artist</th>
                                     <th>Album</th>
                                     <th>Year</th>
@@ -100,9 +100,7 @@
                         </div>
                         <button id="success-btn" type="submit" class="btn btn-outline-secondary create-album">Submit</button>
                     </form>
-                    <!--<button id="delete" class="btn btn-outline-danger">Delete</button>-->
                     <br>
-                    <p class="text-muted">To delete an entree, click the required row first</p>
 
                 </div>
             </div>
@@ -223,7 +221,6 @@
         function buildTable(obj){
                 var row =   `<tr scope="row" class="album-row-${obj._id}">
                                 <td class="text-center">
-                                    <input type="checkbox" class="checkitem"/>
                                     <img src="" class="img-thumbnail" width="100" height="100" />
                                 </td>
                                 <td>${obj.artist}</td>
