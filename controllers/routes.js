@@ -3,7 +3,7 @@ router = express.Router();
 const albumCtrl = require('./album-controller');
 
 router.post('/post-newalbum', albumCtrl.createAlbum);
-router.get('/', albumCtrl.getPage);
+//router.get('/', albumCtrl.getPage);
 router.get('/albums', albumCtrl.getAlbums);
 router.get('/albums/:id', albumCtrl.getAlbum);
 router.delete('/albums/:id', albumCtrl.deleteAlbum);

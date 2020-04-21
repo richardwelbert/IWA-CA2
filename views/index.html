@@ -2,7 +2,6 @@
 <html lang="en">
 
     <head>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -14,34 +13,38 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
 
+        <!-- Bootstrap core JavaScript -->
+        <script src="jquery/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
 
     <body>
-    <!-- Navigation bar -->
+        <!-- Navigation bar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary static-top">
             <div class="container">
             <a class="navbar-brand" href="#">Album Collection</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                    <span class="sr-only">(current)</span>
-                    </a> 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                </ul>
-            </div>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                            </a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -57,13 +60,15 @@
                         <table id="menuTable" class="indent table-hover">
                             <thead>
                                 <tr>
-                                    <th colspan="4">Album Collection</th>
+                                    <th colspan="6">Album Collection</th>
                                 </tr>
                                 <tr>
-                                    <th>Select</th>
+                                    <th style="text-align: center; width: 45px;">Select<input type="checkbox" id="checkall"/></th>
                                     <th>Artist</th>
                                     <th>Album</th>
                                     <th>Year</th>
+                                    <th>Genre</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
@@ -76,7 +81,7 @@
                     <form name="newAlbumForm" enctype="application/json" action="/post-newalbum" onsubmit="return validateForm()" method="post">
                         <label for="">Add a new Album</label>
                         <div class="form-group">
-                            <select class="form-control" name="genre">
+                            <select id="album-genre" class="form-control" name="genre">
                                 <option selected>Choose...</option>
                                 <option value="POP">Pop</option>
                                 <option value="REB">ReB</option>
@@ -85,86 +90,222 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="artist" placeholder="Artist">
+                            <input id="album-artist" class="form-control" type="text" name="artist" placeholder="Artist">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="album" placeholder="Album">
+                            <input id="album-name" class="form-control" type="text" name="album" placeholder="Album">
                         </div>
                         <div class="form-group">
-                            <input class="form-control"  type="number" name="year" placeholder="Year">
+                            <input id="album-year" class="form-control"  type="number" name="year" placeholder="Year">
                         </div>
-                        
-                        <button id="success-btn" onclick="window.location.href ='index.html';" type="submit" class="btn btn-outline-secondary">Submit</button>
+                        <button id="success-btn" type="submit" class="btn btn-outline-secondary create-album">Submit</button>
                     </form>
-                    
-                    <button id="delete" class="btn btn-outline-danger">Delete</button>
+                    <!--<button id="delete" class="btn btn-outline-danger">Delete</button>-->
                     <br>
                     <p class="text-muted">To delete an entree, click the required row first</p>
 
-                    <form>
-                        <div class="form-group">
-                            <input type="checkbox" name="cbOpts" value="isNone" id="showNone"/>
-                            <label for="showNone">Click Here to Highlight Number 1 Albums</label>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
         <!-- Footer -->
         <footer class="footer">
-        <div class="container">
-            <span class="text-muted">&copy; 2019</span>
-        </div>
+            <div class="container">
+                <span class="text-muted">&copy; 2019</span>
+            </div>
         </footer>
-
     </body>
 
-    <!-- Bootstrap core JavaScript -->
-        <script src="jquery/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="jquery/table.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
+    
+    <script>
 
-        var myArray = []
+        $("#checkall").change(function(){
+            $(".checkitem").prop("checked", $(this).prop("checked"))
+        })
+        $(".checkitem").change(function(){
+            if($(this).prop("checked") == false){
+                $("#checkall").prop("checked", false)
+            }
+            if($(".checkitem:checked").length == $(".checkitem").length){
+                $("#checkall").prop("checked", true)
+            }
+        });
 
-        buildTable(myArray)
+        var newId = 1
+        var newAlbum = {'id': `album-${newId}`,'genre': null, 'artist': null, 'album': null, 'year': null}
 
-        $.ajax({
-            method: 'GET',
-            url: 'https://3000-ffa79700-382d-4499-b043-643d2948d1f7.ws-us02.gitpod.io/albums',
-            success: function(response){
-                myArray = response
-                buildTable(myArray)
+        $('#add-album').on('click', function(){
+            
+        })
+
+        $('#album-artist').on('keyup', function(){
+            newAlbum.year = $(this).val()
+        })
+
+        $('#album-name').on('keyup', function(){
+            newAlbum.year = $(this).val()
+        })
+
+        $('#album-year').on('keyup', function(){
+            newAlbum.year = $(this).val()
+        })
+
+        $('#album-genre').on('change', function(){
+            newAlbum.genre = $(this).val()
+            
+        })
+
+        $('#create-album').on('click', function(){
+            if(newAlbum.name == null){
+                alert('No test selected!')
+            }else{
+                addRow(newAlbum)
+                createAlbumPOST()
+                $('#album-artist').val('')
+                $('#album-name').val('')
+                $('#album-year').val('')
+                $('#album-genre').val('')
             }
         })
 
-            function buildTable(data){
-                var table = document.getElementById('myTable')
+        function createAlbumPOST(){
+            var url = '/post-newalbum'
 
-                for(var i = 0; i < data.length; i++){
-                    var row =   `<tr>
-                                    <td colspan="4">
-                                        ${data[i].genre}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">
-                                        <input name="item0" type="checkbox" />
-                                        <img src="" class="img-thumbnail" width="100" height="100" />
-                                    </td>
-                                    <td>
-                                        ${data[i].artist}
-                                    </td>
-                                    <td>
-                                        ${data[i].album}
-                                    </td>
-                                    <td>
-                                        ${data[i].year}
-                                    </td>
-                                </tr>`
-                        table.innerHTML += row
+            $.ajax({
+                method: 'POST',
+                url: url,
+                data: newAlbum,
+                success: function(){
+
+                }
+            })
+        }
+
+        function updateAlbumPOST(){
+            var url = '/albums/:id'
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                success: function(){
+                    
+                }
+            })
+        }
+
+        function deleteAlbumPOST(){
+            var url = '/albums/:id'
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                success: function(){
+                    
+                }
+            })
+        }
+
+        var myArray = []
+        var dataURL = '/albums'
+
+        $.ajax({
+            method: 'GET',
+            url: dataURL,
+            success: function(response){
+                myArray = response
+                for (var i in myArray){
+                    buildTable(myArray[i])
                 }
             }
-        </script> 
+        })
+
+
+        function buildTable(obj){
+                var row =   `<tr scope="row" class="album-row-${obj._id}">
+                                <td class="text-center">
+                                    <input type="checkbox" class="checkitem"/>
+                                    <img src="" class="img-thumbnail" width="100" height="100" />
+                                </td>
+                                <td>${obj.artist}</td>
+                                <td>${obj.album}</td>
+                                <td>${obj.year}</td>
+                                <td id="genre-${obj._id}" data-albumid="${obj._id}">${obj.genre}</td>
+                                <td>
+                                    <button class="btn btn-outline-danger" data-albumid="${obj._id}" id="delete-${obj._id}" >Delete</button>
+                                    <button class="btn btn-outline-info" disabled data-albumid="${obj._id}" id="save-${obj._id}">Save</button>
+                                    <button class="btn btn-outline-danger hidden" data-albumid="${obj._id}" id="cancel-${obj._id}">Cancel</button>
+                                    <button class="btn btn-outline-primary hidden" data-albumid="${obj._id}" id="confirm-${obj._id}">Confirm</button>
+                                </td>
+                            </tr>`
+                    $('#myTable').append(row)
+
+                    $(`#delete-${obj._id}`).on('click', deleteAlbum)
+                    $(`#cancel-${obj._id}`).on('click', cancelDeletion)
+                    $(`#confirm-${obj._id}`).on('click', confirmDeletion)
+
+                    $(`#genre-${obj._id}`).on('click', editGenre)
+        }
+
+        function editGenre(){
+            var albumid = $(this).data('albumid')
+            var value = $(this).html()
+
+            $(this).unbind()
+            $(this).html(`<input class="genre form-control" data-albumid="${albumid}" type="text" value="${value}">`)
+
+            $(".genre").on('keyup', function(){
+                var albumid = $(this).data('albumid')
+                var saveBtn = $(`#save-${albumid}`)
+                saveBtn.prop('disabled', false)
+
+            })
+        }
+
+        function saveUpdate(){
+            var albumid = $(this).data('albumid')
+            var saveBtn = $(`#save-${albumid}`)
+            var row = $(`.album-row-${albumid}`)
+
+            saveBtn.prop('disabled', true)
+            row.css('opacity', "0.5")
+
+        }
+
+        function deleteAlbum(){
+            var albumid = $(this).data('albumid')
+
+            var deleteBtn = $(`#delete-${albumid}`)
+            var saveBtn = $(`#save-${albumid}`)
+            var cancelBtn = $(`#cancel-${albumid}`)
+            var confirmBtn = $(`#confirm-${albumid}`)
+
+            deleteBtn.addClass('hidden')
+            saveBtn.addClass('hidden')
+
+            cancelBtn.removeClass('hidden')
+            confirmBtn.removeClass('hidden')
+        }
+
+        function cancelDeletion(){
+            var albumid = $(this).data('albumid')
+
+            var deleteBtn = $(`#delete-${albumid}`)
+            var saveBtn = $(`#save-${albumid}`)
+            var cancelBtn = $(`#cancel-${albumid}`)
+            var confirmBtn = $(`#confirm-${albumid}`)
+
+            deleteBtn.removeClass('hidden')
+            saveBtn.removeClass('hidden')
+
+            cancelBtn.addClass('hidden')
+            confirmBtn.addClass('hidden')
+        }
+
+        function confirmDeletion(){
+            var albumid = $(this).data('albumid')
+            var row = $(`.album-row-${albumid}`)
+            row.remove()
+        }
+
+
+    </script> 
 </html>

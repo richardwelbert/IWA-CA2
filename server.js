@@ -14,6 +14,7 @@ const albumCtrl = require('./controllers/album-controller');
 var server = http.createServer(app); //This is where our server gets created
 
 app.set('views', path.join(__dirname, '/views/'));
+app.set('view engine', 'html');
 app.use(express.static(path.resolve(__dirname, 'views'))); //We define the views folder as the one where all static content will be served
 
 //We define the root of our website and render index.html located inside the views folder

@@ -1,22 +1,22 @@
-function draw_table()
-{
-    $("#results").empty();
-    $.getJSONuncached = function(url) 
-    {
-        return $.ajax(
-        {
-            url: url,
-            type: 'GET',
-            cache: false,
-            success: function(html)
-            {
-                $("#results").append(html);
-                select_row();
-            }
-        });
-    };
-    $.getJSONuncached("/get/html")
-};
+// function draw_table()
+// {
+//     $("#results").empty();
+//     $.getJSONuncached = function(url) 
+//     {
+//         return $.ajax(
+//         {
+//             url: url,
+//             type: 'GET',
+//             cache: false,
+//             success: function(html)
+//             {
+//                 $("#results").append(html);
+//                 select_row();
+//             }
+//         });
+//     };
+//     $.getJSONuncached("/get/html")
+// };
 
 function select_row()
 {
@@ -107,6 +107,6 @@ function validateForm() {
 
 };
 
-$(document).ready(function(){
-    draw_table();
-});
+// $(document).ready(function(){
+//     draw_table();
+// });

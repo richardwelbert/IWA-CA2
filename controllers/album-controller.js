@@ -5,36 +5,17 @@ require('dotenv/config');
 
 var url = (process.env.DB_CONNECTION);
 
-exports.createAlbum = function(req, res) {
-    var newalbum = {
-        genre: req.body.genre,
-        artist: req.body.artist,
-        album: req.body.album,
-        year: req.body.year
-    };
-    mongoose.connect(url, function(err, db){
-        assert.equal(null, err);
-        db.collection('albums').insertOne(newalbum, function(err, result){
-            assert.equal(null, err);
-            console.log('Item inserted');
-            db.close();
-        });
-    });
-    res.redirect('/');
-    /*new Album(req.body);
+exports.createAlbum = function(req, res){
+    var newalbum = new Album(req.body);
     newalbum.save(function (err, album) { 
         if (err) { 
             res.status (400).json(err);
         }
 
-        res.json(album); 
-});*/
-};
-
-exports.getPage = (function(req, res, next){
-    res.sendFile(path.join(__dirname, 'index.html'));
-    res.render('index');
-});
+        res.redirect('/');
+    });
+    
+}
 
 exports.getAlbums = function(req, res) {
   Album.find({}, function (err, albums) {
