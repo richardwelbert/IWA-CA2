@@ -1,9 +1,4 @@
-var Album = require('../models/album'),
-mongoose = require('mongoose'),
-assert = require('assert');
-require('dotenv/config');
-
-var url = (process.env.DB_CONNECTION);
+var Album = require('../models/album');
 
 exports.createAlbum = function(req, res){
     var newalbum = new Album(req.body);
@@ -11,27 +6,26 @@ exports.createAlbum = function(req, res){
         if (err) { 
             res.status (400).json(err);
         }
-
         res.redirect('/');
     });
     
-}
+};
 
 exports.getAlbums = function(req, res) {
-  Album.find({}, function (err, albums) {
+  Album.find({}, function (err, album) {
     if (err) {
       res.status(400).json(err); 
     } 
-    res.json(albums);
+    res.json(album);
   }); 
 };
 
 exports.getAlbum = function(req, res) {
-  Album.findOne({_id: req.params.id}, function (err, album) {
+  Album.findOne({_id: req.params.id}, function (err, albums) {
     if (err) {
       res.status(400).json(err);
     } 
-    res.json(album);
+    res.json(albums);
   }); 
 };
 

@@ -130,7 +130,7 @@
             }
         });
 
-        var newId = 1
+        var newId = "1"
         var newAlbum = {'id': `album-${newId}`,'genre': null, 'artist': null, 'album': null, 'year': null}
 
         $('#add-album').on('click', function(){
@@ -180,23 +180,24 @@
             })
         }
 
-        function updateAlbumPOST(){
-            var url = '/albums/:id'
+        function updateAlbumPUT(data, id){
+            var url = '/albums/' + id
 
             $.ajax({
-                method: 'POST',
+                method: 'PUT',
                 url: url,
+                data: data,
                 success: function(){
                     
                 }
             })
         }
 
-        function deleteAlbumPOST(){
-            var url = '/albums/:id'
+        function deleteAlbumPOST(id){
+            var url = '/albums/' + id
 
             $.ajax({
-                method: 'POST',
+                method: 'DELETE',
                 url: url,
                 success: function(){
                     
@@ -241,6 +242,7 @@
                     $(`#delete-${obj._id}`).on('click', deleteAlbum)
                     $(`#cancel-${obj._id}`).on('click', cancelDeletion)
                     $(`#confirm-${obj._id}`).on('click', confirmDeletion)
+                     $(`#save-${obj._id}`).on('click', saveUpdate)
 
                     $(`#genre-${obj._id}`).on('click', editGenre)
         }
@@ -250,7 +252,7 @@
             var value = $(this).html()
 
             $(this).unbind()
-            $(this).html(`<input class="genre form-control" data-albumid="${albumid}" type="text" value="${value}">`)
+            $(this).html(`<input class="genre form-control" data-albumid="${albumid}" id="album-${albumid}" type="text" value="${value}">`)
 
             $(".genre").on('keyup', function(){
                 var albumid = $(this).data('albumid')
@@ -267,6 +269,14 @@
 
             saveBtn.prop('disabled', true)
             row.css('opacity', "0.5")
+
+            var genre = $(`#album-${albumid}`).val();
+            var data = {'genre': genre}
+            updateAlbumPUT(data, albumid)
+
+            setTimeout(function(){
+                row.css('opacity', '1')
+            }, 2000)
 
         }
 
@@ -304,6 +314,7 @@
             var albumid = $(this).data('albumid')
             var row = $(`.album-row-${albumid}`)
             row.remove()
+            deleteAlbumPOST(albumid)
         }
 
 

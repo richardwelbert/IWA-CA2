@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var albumSchema = new mongoose.Schema ({
+
     artist: {
         type: String,
         required: 'This field is required.'

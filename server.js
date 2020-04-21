@@ -25,7 +25,7 @@ app.get('/', function(req, res){
 })
 
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 //importing routes
 app.use(require('./controllers/routes'));
