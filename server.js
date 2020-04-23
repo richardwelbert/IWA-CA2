@@ -1,12 +1,12 @@
-var logger = require("morgan"),
-cors = require("cors"),
+var logger = require("morgan"), //Module to log requests and errors to the console
+cors = require("cors"), //Module to allow communication between different origins
 http = require("http"), //This module provides the HTTP server functionalities
 express = require("express"), //This module allows this app to respond to HTTP Requests, defines the routing and renders back the required content
-mongoose = require('mongoose'),
+mongoose = require('mongoose'), //Module to connect to mongodb database
 path = require('path'), //The path module provides utilities for working with file and directory paths
-bodyParser = require("body-parser"),
+bodyParser = require("body-parser"), //Module to read the HTTP POST data
 sweetAlert = require('sweetalert'); //This module is for the pop up alerts
-require('dotenv/config');
+require('dotenv/config'); //module to hide the link that connects to the database
 
 
 var app = express(); //The set our routing to be handled by Express
