@@ -116,25 +116,10 @@
     
     <script>
 
-        $("#checkall").change(function(){
-            $(".checkitem").prop("checked", $(this).prop("checked"))
-        })
-        $(".checkitem").change(function(){
-            if($(this).prop("checked") == false){
-                $("#checkall").prop("checked", false)
-            }
-            if($(".checkitem:checked").length == $(".checkitem").length){
-                $("#checkall").prop("checked", true)
-            }
-        });
-
         var newId = "1"
         var newAlbum = {'id': `album-${newId}`,'genre': null, 'artist': null, 'album': null, 'year': null}
 
-        $('#add-album').on('click', function(){
-            
-        })
-
+        //helpers to create a new album 
         $('#album-artist').on('keyup', function(){
             newAlbum.year = $(this).val()
         })
@@ -152,9 +137,52 @@
             
         })
 
+        //this method is to validate the user input
+        function validateForm() {
+        var genre = document.forms["newAlbumForm"]["genre"].value;
+        var artist = document.forms["newAlbumForm"]["artist"].value;
+        var album = document.forms["newAlbumForm"]["album"].value;
+        var year = document.forms["newAlbumForm"]["year"].value;
+        //checks if the field genre is selected
+        if (genre == "Choose...") {
+            alert("You must choose a genre");
+            return false;
+        } else if (artist == "") {
+            //checks if the artist genre is typed
+            alert("Artist must be filled out");
+            return false;
+        } else if (album == "") {
+            //checks if the album genre is typed
+            alert("Album must be filled out");
+            return false;
+        } else if (year == "") {
+            //checks if the field year is typed
+            alert("Year must be filled out");
+            return false;
+        } else if (isNaN(year)){
+            //checks if the input if year is a number
+            alert("Year must be a number and have 4 digits");
+            return false;
+        } else if (year.length < 4 || year.length > 4){
+            //checks if the input of year has 4 numbers
+            alert("Year must have 4 digits");
+            return false;
+        }
+
+        swal("Good job!", "You just added an Album!", "success"); //pop up alert
+
+    };
+
+        //Validation of entries for the new album
         $('#create-album').on('click', function(){
-            if(newAlbum.name == null){
-                alert('No test selected!')
+            if(newAlbum.genre == null){
+                alert('No genre selected!')
+            }else if(newAlbum.artist == null){
+                alert('Artist cant be empty!')
+            }else if(newAlbum.name == null){
+                alert('Album cant be empty!')
+            }else if(newAlbum.year == null){
+                alert('Year cant be empty!')
             }else{
                 addRow(newAlbum)
                 createAlbumPOST()
@@ -165,6 +193,7 @@
             }
         })
 
+        //Ajax POST function to create an album and save into the DB
         function createAlbumPOST(){
             var url = '/post-newalbum'
 
@@ -176,8 +205,10 @@
 
                 }
             })
+            
         }
 
+        //Ajax PUT function to update an album 
         function updateAlbumPUT(data, id){
             var url = '/albums/' + id
 
@@ -191,6 +222,7 @@
             })
         }
 
+        //Ajax DELETE function to delete an album from the DB
         function deleteAlbumPOST(id){
             var url = '/albums/' + id
 
@@ -201,11 +233,13 @@
                     
                 }
             })
+            swal("Deleted!", "You just deleted an Album!", "info"); //pop up alert
         }
 
         var myArray = []
         var dataURL = '/albums'
 
+        //Ajax GET function to get contents from the DB and populate the table
         $.ajax({
             method: 'GET',
             url: dataURL,
@@ -217,7 +251,7 @@
             }
         })
 
-
+        //Function to build the table with the contents from the database
         function buildTable(obj){
                 var row =   `<tr scope="row" class="album-row-${obj._id}">
                                 <td class="text-center">
@@ -239,11 +273,11 @@
                     $(`#delete-${obj._id}`).on('click', deleteAlbum)
                     $(`#cancel-${obj._id}`).on('click', cancelDeletion)
                     $(`#confirm-${obj._id}`).on('click', confirmDeletion)
-                     $(`#save-${obj._id}`).on('click', saveUpdate)
-
+                    $(`#save-${obj._id}`).on('click', saveUpdate)
                     $(`#genre-${obj._id}`).on('click', editGenre)
         }
 
+        //Function to edit the Genre
         function editGenre(){
             var albumid = $(this).data('albumid')
             var value = $(this).html()
@@ -259,6 +293,7 @@
             })
         }
 
+        //Function that saves an update
         function saveUpdate(){
             var albumid = $(this).data('albumid')
             var saveBtn = $(`#save-${albumid}`)
@@ -277,6 +312,7 @@
 
         }
 
+        //Function to delete an album. It changes the buttons on the screen
         function deleteAlbum(){
             var albumid = $(this).data('albumid')
 
@@ -292,6 +328,7 @@
             confirmBtn.removeClass('hidden')
         }
 
+        //Function to cancel the deletion of an album
         function cancelDeletion(){
             var albumid = $(this).data('albumid')
 
@@ -307,6 +344,7 @@
             confirmBtn.addClass('hidden')
         }
 
+        //Function to confirm the deletion of an album
         function confirmDeletion(){
             var albumid = $(this).data('albumid')
             var row = $(`.album-row-${albumid}`)

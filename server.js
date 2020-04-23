@@ -4,11 +4,12 @@ http = require("http"), //This module provides the HTTP server functionalities
 express = require("express"), //This module allows this app to respond to HTTP Requests, defines the routing and renders back the required content
 mongoose = require('mongoose'),
 path = require('path'), //The path module provides utilities for working with file and directory paths
-bodyParser = require("body-parser");
+bodyParser = require("body-parser"),
+sweetAlert = require('sweetalert'); //This module is for the pop up alerts
 require('dotenv/config');
 
 
-var app = express();
+var app = express(); //The set our routing to be handled by Express
 var port = process.env.PORT || 3000;
 const albumCtrl = require('./controllers/album-controller');
 var server = http.createServer(app); //This is where our server gets created

@@ -2,6 +2,7 @@ var express = require('express'),
 router = express.Router();
 const albumCtrl = require('./album-controller');
 
+//routes to album-controller
 router.post('/post-newalbum', albumCtrl.createAlbum);
 router.get('/albums', albumCtrl.getAlbums);
 router.get('/albums/:id', albumCtrl.getAlbum);

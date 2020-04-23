@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+//Schema of the album
 var albumSchema = new mongoose.Schema ({
 
     artist: {
