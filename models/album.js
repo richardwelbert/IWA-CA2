@@ -1,3 +1,11 @@
+/*
+Code adapted from the structure that can be found on the link below
+
+Title: Mongodb-test
+Author: Mikhail Timofeev
+Date: 18/04/2020 (last accessed)
+Availability: https://github.com/mikhail-cct/mongodb-test */
+
 var mongoose = require('mongoose');
 
 //Schema of the album

@@ -1,3 +1,12 @@
+/*
+Code adapted from the structure that can be found on the link below
+
+Title: Mongodb-test
+Author: Mikhail Timofeev
+Date: 18/04/2020 (last accessed)
+Availability: https://github.com/mikhail-cct/mongodb-test 
+*/
+
 var logger = require("morgan"), //Module to log requests and errors to the console
 cors = require("cors"), //Module to allow communication between different origins
 http = require("http"), //This module provides the HTTP server functionalities
